@@ -46,12 +46,12 @@ def send_message(bot, message):
     """Отпровка сообщений в Telegram чат."""
     try:
         bot.send_message(
-        chat_id=TELEGRAM_CHAT_ID,
-        text=message,
+            chat_id=TELEGRAM_CHAT_ID,
+            text=message,
         )
     except Exception as error:
         error_message = f'Сбой при отправке сообщения в Telegram: {error}'
-        logging.error(error_message)      
+        logging.error(error_message)
         raise CustomException(error_message)
     else:
         logging.info(f'Бот отправил сообщение "{message}"')
@@ -60,7 +60,7 @@ def send_message(bot, message):
 def get_api_answer(current_timestamp):
     """Отправка запроса к эндпоинту API-сервиса."""
     timestamp = current_timestamp or int(time.time())
-    params  = {'from_date': timestamp}
+    params = {'from_date': timestamp}
     response = requests.get(ENDPOINT, headers=HEADERS, params=params)
     if response.status_code != HTTPStatus.OK:
         error_message = (f'Эндпоинт {ENDPOINT} недоступен. '
@@ -81,7 +81,7 @@ def check_response(response):
 
 
 def parse_status(homework):
-    """Извлечение из информации о конкретной 
+    """Извлечение из информации о конкретной
     домашней работе статус этой работы.
     """
     homework_name = homework.get('homework_name')
