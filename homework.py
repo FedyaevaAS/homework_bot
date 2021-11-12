@@ -124,6 +124,8 @@ def main():
             homeworks = check_response(response)
             if len(homeworks) == 0:
                 logger.debug('Статус домашней работы не изменился')
+                time.sleep(RETRY_TIME)
+                continue
             last_homework = homeworks[0]
             status = parse_status(last_homework)
             send_message(bot, status)
