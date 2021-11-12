@@ -92,8 +92,7 @@ def parse_status(homework):
     if homework_name is None:
         logger.error('Отсутствует название домашней работы')
         return f'Изменился статус проверки работы. {verdict}'
-    else:
-        return f'Изменился статус проверки работы "{homework_name}". {verdict}'
+    return f'Изменился статус проверки работы "{homework_name}". {verdict}'
 
 
 def check_tokens():
@@ -123,20 +122,19 @@ def main():
         try:
             response = get_api_answer(current_timestamp)
             homeworks = check_response(response)
-            if len(homeworks) > 0:
-                last_homework = homeworks[0]
-                status = parse_status(last_homework)
-                send_message(bot, status)
-                time_last_homework_str = last_homework.get('date_updated')
-                current_timestamp = int(
-                    dt.datetime.strptime(
-                        time_last_homework_str,
-                        "%Y-%m-%dT%H:%M:%SZ"
-                    ).timestamp()
-                )
-                time.sleep(RETRY_TIME)
-            else:
+            if len(homeworks) == 0:
                 logger.debug('Статус домашней работы не изменился')
+            last_homework = homeworks[0]
+            status = parse_status(last_homework)
+            send_message(bot, status)
+            time_last_homework_str = last_homework.get('date_updated')
+            current_timestamp = 1 + int(
+                dt.datetime.strptime(
+                    time_last_homework_str,
+                    "%Y-%m-%dT%H:%M:%SZ"
+                ).timestamp()
+            )
+            time.sleep(RETRY_TIME)                
         except Exception as error:
             message = f'Сбой в работе программы: {error}'
             split_message = message.split('from_date')[0]
