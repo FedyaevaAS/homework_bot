@@ -108,7 +108,7 @@ def check_tokens():
         if value is None:
             result.append(False)
             logger.critical('Отсутствует обязательная переменная '
-                             f'окружения {name}')
+                            f'окружения {name}')
     return all(result)
 
 
