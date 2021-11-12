@@ -134,7 +134,7 @@ def main():
                     "%Y-%m-%dT%H:%M:%SZ"
                 ).timestamp()
             )
-            time.sleep(RETRY_TIME)                
+            time.sleep(RETRY_TIME)
         except Exception as error:
             message = f'Сбой в работе программы: {error}'
             split_message = message.split('from_date')[0]
