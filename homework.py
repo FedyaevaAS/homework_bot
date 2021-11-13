@@ -124,6 +124,7 @@ def main():
             homeworks = check_response(response)
             if len(homeworks) == 0:
                 logger.debug('Статус домашней работы не изменился')
+                current_timestamp = int(time.time())
                 time.sleep(RETRY_TIME)
                 continue
             last_homework = homeworks[0]
