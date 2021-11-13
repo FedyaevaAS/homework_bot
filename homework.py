@@ -124,19 +124,12 @@ def main():
             homeworks = check_response(response)
             if len(homeworks) == 0:
                 logger.debug('Статус домашней работы не изменился')
-                current_timestamp = int(time.time())
                 time.sleep(RETRY_TIME)
                 continue
             last_homework = homeworks[0]
             status = parse_status(last_homework)
             send_message(bot, status)
-            time_last_homework_str = last_homework.get('date_updated')
-            current_timestamp = 1 + int(
-                dt.datetime.strptime(
-                    time_last_homework_str,
-                    "%Y-%m-%dT%H:%M:%SZ"
-                ).timestamp()
-            )
+            current_timestamp = int(time.time())
             time.sleep(RETRY_TIME)
         except Exception as error:
             message = f'Сбой в работе программы: {error}'
